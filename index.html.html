@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Періодична таблиця з QR-кодами</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0f172a;           /* slate-900 */
+  --panel:#111827cc;      /* glass panel */
+  --card:#0b1220;         /* card base */
+  --accent:#22c55e;       /* green */
+  --accent-2:#38bdf8;     /* cyan */
+  --text:#e5e7eb;         /* light text */
+  --muted:#9ca3af;        /* muted */
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 80% -10%, #1f2937 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #020617 0%, transparent 60%),
+    var(--bg);
+}
+
+.header{
+  position:sticky; top:0; z-index:5;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, #020617cc, #02061788);
+  border-bottom:1px solid #1f2937;
+}
+.header .wrap{
+  max-width:1100px; margin:auto; padding:16px 20px; display:flex; align-items:center; justify-content:space-between;
+}
+.title{font-weight:700; letter-spacing:.3px}
+.badge{
+  padding:6px 10px; border-radius:999px; border:1px solid #1f2937; color:var(--muted); font-size:12px
+}
+
+.container{max-width:1100px; margin:24px auto; padding:0 20px}
+
+.toolbar{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px}
+.input{
+  flex:1; min-width:220px; padding:12px 14px; border-radius:12px; border:1px solid #1f2937; background:#020617; color:var(--text)
+}
+.btn{
+  padding:12px 14px; border-radius:12px; border:1px solid #1f2937; background:linear-gradient(135deg, #020617, #0b1220); color:var(--text); cursor:pointer
+}
+.btn:hover{border-color:#334155}
+
+.grid{
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px;
+}
+
+.card{
+  position:relative; overflow:hidden;
+  background:linear-gradient(180deg, #020617, var(--card));
+  border:1px solid #1f2937; border-radius:18px; padding:16px;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.card::after{
+  content:""; position:absolute; inset:-2px; border-radius:20px; pointer-events:none;
+  background:linear-gradient(120deg, transparent 20%, #22c55e55, #38bdf855, transparent 80%);
+  opacity:.0; transition:opacity .25s ease;
+}
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px #00000066;
+  border-color:#334155;
+}
+.card:hover::after{opacity:.35}
+
+.top{
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:10px
+}
+.symbol{
+  font-size:38px; font-weight:700; letter-spacing:1px
+}
+.atomic{
+  font-size:12px; color:var(--muted); border:1px dashed #334155; padding:4px 8px; border-radius:10px
+}
+.name{font-weight:500; margin-bottom:8px}
+.info{font-size:13px; color:var(--muted); line-height:1.4}
+
+.qr{
+  margin-top:12px; display:flex; align-items:center; justify-content:center; padding:10px; border-radius:12px; background:#020617; border:1px solid #1f2937
+}
+.qr img{width:110px; height:110px; image-rendering:pixelated}
+
+.footer{opacity:.6; font-size:12px; text-align:center; margin:26px 0}
+
+</style>
+</head>
+<body>
+<div class="header">
+<div class="wrap">
+<div class="title">⚗️ Періодична таблиця з QR-кодами</div>
+<div class="badge"></div>
+</div>
+</div>
+<div class="container">
+<div class="toolbar">
+
+<button class="btn" onclick="resetSearch()">Скинути</button>
+</div>
+<div class="grid" id="grid">
+<!-- Card -->
+<div class="card" data-name="Водень H">
+<div class="top">
+<div class="symbol">H</div>
+<div class="atomic">Z=1</div>
+</div>
+<div class="name">Водень</div>
+<div class="info">Протони: 1<br/>Нейтрони: 0<br/>Електрони: 1</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Водень"/></div>
+</div>
+<div class="card" data-name="Гелій He">
+<div class="top">
+<div class="symbol">He</div>
+<div class="atomic">Z=2</div>
+</div>
+<div class="name">Гелій</div>
+<div class="info">Протони: 2<br/>Нейтрони: 2<br/>Електрони: 2</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Гелій"/></div>
+</div>
+<div class="card" data-name="Вуглець C">
+<div class="top">
+<div class="symbol">C</div>
+<div class="atomic">Z=6</div>
+</div>
+<div class="name">Вуглець</div>
+<div class="info">Протони: 6<br/>Нейтрони: 6<br/>Електрони: 6</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Вуглець"/></div>
+</div>
+<div class="card" data-name="Кисень O">
+<div class="top">
+<div class="symbol">O</div>
+<div class="atomic">Z=8</div>
+</div>
+<div class="name">Кисень</div>
+<div class="info">Протони: 8<br/>Нейтрони: 8<br/>Електрони: 8</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Кисень"/></div>
+</div>
+<div class="card" data-name="Залізо Fe">
+<div class="top">
+<div class="symbol">Fe</div>
+<div class="atomic">Z=26</div>
+</div>
+<div class="name">Залізо</div>
+<div class="info">Протони: 26<br/>Нейтрони: 30<br/>Електрони: 26</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Залізо"/></div>
+</div>
+<div class="card" data-name="Натрій Na">
+<div class="top"><div class="symbol">Na</div><div class="atomic">Z=11</div></div>
+<div class="name">Натрій</div>
+<div class="info">Протони: 11<br/>Нейтрони: 12<br/>Електрони: 11</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Натрій"/></div>
+</div>
+<div class="card" data-name="Алюміній Al">
+<div class="top"><div class="symbol">Al</div><div class="atomic">Z=13</div></div>
+<div class="name">Алюміній</div>
+<div class="info">Протони: 13<br/>Нейтрони: 14<br/>Електрони: 13</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Алюміній"/></div>
+</div>
+<div class="card" data-name="Калій K">
+<div class="top"><div class="symbol">K</div><div class="atomic">Z=19</div></div>
+<div class="name">Калій</div>
+<div class="info">Протони: 19<br/>Нейтрони: 20<br/>Електрони: 19</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Калій"/></div>
+</div>
+<div class="card" data-name="Кальцій Ca">
+<div class="top"><div class="symbol">Ca</div><div class="atomic">Z=20</div></div>
+<div class="name">Кальцій</div>
+<div class="info">Протони: 20<br/>Нейтрони: 20<br/>Електрони: 20</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Кальцій"/></div>
+</div>
+<div class="card" data-name="Срібло Ag">
+<div class="top"><div class="symbol">Ag</div><div class="atomic">Z=47</div></div>
+<div class="name">Срібло</div>
+<div class="info">Протони: 47<br/>Нейтрони: 61<br/>Електрони: 47</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Срібло"/></div>
+</div>
+<div class="card" data-name="Золото Au">
+<div class="top"><div class="symbol">Au</div><div class="atomic">Z=79</div></div>
+<div class="name">Золото</div>
+<div class="info">Протони: 79<br/>Нейтрони: 118<br/>Електрони: 79</div>
+<div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&amp;data=https://uk.wikipedia.org/wiki/Золото"/></div>
+</div>
+</div>
+<div class="footer">Пошук працює за назвою елемента або його символом</div>
+</div>
+<script>
+function filterCards(){
+  const q = document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('.card').forEach(c => {
+    const name = c.getAttribute('data-name').toLowerCase();
+    c.style.display = name.includes(q) ? 'block' : 'none';
+  });
+}
+function resetSearch(){
+  const s = document.getElementById('search'); s.value=''; filterCards();
+}
+</script>
+</body>
+</html>
